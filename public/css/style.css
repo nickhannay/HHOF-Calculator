@@ -1,0 +1,29 @@
+
+html {
+        font-size: 15px;
+        padding: 0;
+        margin: 0;
+}
+
+
+
+body {
+        margin: 0;
+        padding: 0;
+        background-color: bisque;
+        min-height: 400px;
+}
+
+
+
+#search-container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+}
+
+
+#search-form {
+        display: inline-block;
+}
