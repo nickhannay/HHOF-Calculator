@@ -4,41 +4,38 @@ const router = express.Router()
 
 const BASE_URL = "https://search.d3.nhle.com/api/v1/search/player"
 
-router.post('/', (req, res) => {
-        console.log(`received search request for [${JSON.stringify(req.body)}]`)
+router.post('/', async (req, res) => {
+        const name = req.body["search-input"]
+        console.log(`received search request for [${name}]`)
 
         
         // make get request to external API
-        const name = req.body['name']
-        const response = getPlayer(name)
+        const playerResults = await getSearchResults(name, 25)
 
 
-        res.json({ message: 'Request received successfully' });
+        console.log(`Results: ${JSON.stringify(playerResults)}`)
+        res.render('index', {results : playerResults});
 })
 
 
-async function getPlayer(name){
+async function getSearchResults(searchName, limit){
         const searchParams = {
-                limit: '25',
+                limit: limit,
                 culture: 'en-us',
-                q: name
+                q: searchName
         }
 
         const searchUrl = new URL(BASE_URL)
         searchUrl.search = new URLSearchParams(searchParams).toString()
-
         const searchResults = await fetch(searchUrl)
+        const resultsJSON = await searchResults.json()
 
-        searchResults.json()
-        .then( data => {
-                console.log(data)
-                data
-        })
-        .catch( e => {
-                console.log(`Error: ${e}`)
-                e
-        })
 
+        let players = []
+        resultsJSON.forEach( (player) => {
+                players.push({name: player.name, id: player.playerId})
+        })
+        return players
 
 }
 

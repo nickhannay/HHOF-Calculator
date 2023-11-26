@@ -1,12 +1,12 @@
 const searchForm = document.getElementById('search-form')
-searchForm.addEventListener('submit', async (event) => {
+/*searchForm.addEventListener('submit', async (event) => {
         event.preventDefault()
         
         const name = document.getElementById('search-input').value
         console.log(name)
         
         // send name to backend
-        const response = await fetch('/searchPlayer', {
+        const response = await fetch('/', {
                 method : 'POST',
                 headers: {
                         'Content-Type' : 'application/json'
@@ -14,9 +14,10 @@ searchForm.addEventListener('submit', async (event) => {
                 body: JSON.stringify({name})
         })
 
-        response.json()
-                .then(data => console.log(data))
-                .catch((error) => console.log(`no response ----- ${error}`))
+        const data = await response.text()
+        console.log(data)
 
-})
+        document.getElementById('searchResults').innerHTML = await response.text
+
+})*/
 
