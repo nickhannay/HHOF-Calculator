@@ -22,7 +22,8 @@ app.use('/', indexRoute)
 const searchPlayerRoute = require('./src/routes/searchPlayer')
 app.use('/search', searchPlayerRoute)
 
-
+const displayPlayerRoute = require('./src/routes/player')
+app.use('/player', displayPlayerRoute)
 
 
 app.use(express.static(path.join(__dirname, 'public')))

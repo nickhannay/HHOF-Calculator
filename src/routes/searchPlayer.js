@@ -13,8 +13,8 @@ router.post('/', async (req, res) => {
         const playerResults = await getSearchResults(name, 25)
 
 
-        console.log(`Results: ${JSON.stringify(playerResults)}`)
-        res.render('index', {results : playerResults});
+        //console.log(`Results: ${JSON.stringify(playerResults)}`)
+        res.render('index', {content: 'index', results : playerResults});
 })
 
 

@@ -1,0 +1,26 @@
+<html>
+        <head>
+                <%- include('partials/head') %>
+        </head>
+
+
+        <body>
+                <img src=<%= player.headshot%> alt-text="headshot">
+                <p><%= player.firstName.default%> <%= player.lastName.default%></p>
+                <table>
+                        <tr>
+                                <td>Career Regular Games Played: </td>
+                                <td><b><%=player.careerTotals.regularSeason.gamesPlayed%></b></td>
+                        </tr>
+                        <tr>
+                                <td>Career Regular Season Goals: </td>
+                                <td><b><%= player.careerTotals.regularSeason.goals %></b></td>
+                        </tr>
+                </table>
+        </body>
+
+
+        <footer>
+                <%- include('partials/footer') %>
+        </footer>
+</html>

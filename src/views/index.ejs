@@ -2,11 +2,7 @@
 
 <html lang="en-US">
         <head>
-                <link rel="stylesheet" href="css/style.css">
-                <meta content="width=device-width" name="viewport" />
-                <meta charset="UTF-8"/>
-
-
+                <%- include('partials/head')%>
         </head>
         <body>
                 <div id="search-container">
@@ -19,15 +15,19 @@
                                 <div id="searchResults">
                                         <ul>
                                                <% results.forEach( (result) => {%>  
-                                                <li><%= result.name %></li>
+                                                <li>
+                                                        <a href="/player/<%=result.id%>"><%= result.name %></li>
+                                                </li>
                                                 <% }) %>
                                         </ul>
                                 </div>
                         <% } %>
-                </div>
-                
+                </div>   
                 
         </body>
+        <footer>
+                <%- include('partials/footer') %>
+        </footer>
 
         <script src="js/index-script.js"></script>
 </html>
