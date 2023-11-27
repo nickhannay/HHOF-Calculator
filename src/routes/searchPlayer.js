@@ -37,10 +37,10 @@ async function getSearchResults(searchName, limit){
                         players.push({name: player.name, id: player.playerId})
                 })
         }
-        
+        console.log(players)
         return players
 
 }
 
 
-module.exports = router 
+module.exports = router

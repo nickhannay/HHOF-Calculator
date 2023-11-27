@@ -23,16 +23,11 @@ module.exports = router
 
 
 function hofCalculator(player){
-        /*if(player.inHHOF === 1){
-                return 100
-        }*/
-
+        
         const awards = getAwards(player)
         const regularSeason = player.careerTotals.regularSeason
-        const playoffs = player.careerTotals.playoffs
+        const playoffs = player.careerTotals.playoffs || {points : 0}
         let hofScore = 0;
-
-
 
         if(player.position === 'G'){
                 
@@ -77,15 +72,14 @@ function hofCalculator(player){
                                         hofScore += (w * (regularSeason.assists / regularSeason.gamesPlayed)/max)
                                         break
                                 default:
-                                        let val = regularSeason[prop] || awards[prop]
+                                        let val = regularSeason[prop] === undefined ? awards[prop] : regularSeason[prop]
                                         hofScore += (w * (val / max))
                                         break
                         }
-
+                
                 }
 
         }
-        console.log(`HOF Score: ${hofScore}`)
         return hofScore
 
 }
