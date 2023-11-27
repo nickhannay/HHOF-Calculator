@@ -27,54 +27,19 @@ function hofCalculator(player){
                 return 100
         }*/
 
-        let numSelke = 0
-        let numHart = 0
-        let numNorris = 0
-        let numRocket = 0
-        let numArtRoss = 0
-        let numLadyBing = 0
-        let numConnSmythe = 0
-        let numStanleyCup = 0
-        let numTedLindsay = 0
+        
 
-        const weights = {
-                ppg: 0.18,
-                gamesPlayed: 0.07,
-                points: 0.15,
-                playoffPoints: 0.13,
-                hart: 0.25,
-                norris: 0.16,
-                connSmythe: 0.21,
-                stanleyCups: 0.1,
-                gpg: 0.09,
-                selke: 0.1,
-                apg: 0.1,
-                ladyBing: 0.05,
-                goals: 0.16,
-                artRoss: 0.15,
-                rocket: 0.12,
-                tedLindsay: 0.18,
-                assists: 0.1
-        }
-
-        const maxValues = {
-                ppg: 1.921,
-                gamesPlayed: 1779,
-                points: 2857,
-                playoffPoints: 382,
-                hart: 9,
-                norris: 7,
-                connSmythe: 3,
-                stanleyCups: 11,
-                gpg: 0.76,
-                selke: 6,
-                apg: 1.32,
-                ladyBing: 7,
-                goals: 894,
-                artRoss: 10,
-                rocket: 8,
-                tedLindsay: 5,
-                assists: 1963
+        const awards = {
+                numSelke :0,
+                numHart :0,
+                numNorris : 0,
+                numRocket : 0,
+                numArtRoss : 0,
+                numLadyBing: 0,
+                numConnSmythe: 0,
+                numStanleyCup: 0,
+                numTedLindsay: 0,
+                numVezina : 0
         }
 
 
@@ -82,31 +47,34 @@ function hofCalculator(player){
                 player.awards.forEach((award) => {
                         switch(award.trophy.default){
                                 case "Art Ross Trophy":
-                                        numArtRoss = award.seasons.length
+                                        awards.numArtRoss = award.seasons.length
                                         break
                                 case "Conn Smythe Trophy":
-                                        numConnSmythe = award.seasons.length
+                                        awards.numConnSmythe = award.seasons.length
                                         break
                                 case "Hart Memorial Trophy":
-                                        numHart = award.seasons.length
+                                        awards.numHart = award.seasons.length
                                         break
                                 case "Maurice “Rocket” Richard Trophy":
-                                        numRocket = award.seasons.length
+                                        awards.numRocket = award.seasons.length
                                         break
                                 case "Stanley Cup":  
-                                        numStanleyCup = award.seasons.length  
+                                        awards.numStanleyCup = award.seasons.length  
                                         break
                                 case "Frank J. Selke Trophy":
-                                        numSelke = award.seasons.length
+                                        awards.numSelke = award.seasons.length
                                         break
                                 case "Lady Byng Memorial Trophy":
-                                        numLadyBing = award.seasons.length
+                                        awards.numLadyBing = award.seasons.length
                                         break
                                 case "James Norris Memorial Trophy":
-                                        numNorris = award.seasons.length
+                                        awards.numNorris = award.seasons.length
                                         break
                                 case "Ted Lindsay Award":
-                                        numTedLindsay = award.seasons.length
+                                        awards.numTedLindsay = award.seasons.length
+                                        break
+                                case "Vezina Trophy":
+                                        awards.numVezina = award.seasons.length
                                         break
                                 default:
                                         // do nothing
@@ -117,46 +85,69 @@ function hofCalculator(player){
         else{
                 console.log("No Trophies")
         }
+        
+
 
         const regularSeason = player.careerTotals.regularSeason
         const playoffs = player.careerTotals.playoffs
-        stats = {
+        let hofScore = 0;
+        if(player.position === 'G'){
                 
-                gamesPlayed : regularSeason.gamesPlayed,
-                points : regularSeason.points,
-                goals : regularSeason.goals,
-                ppg : regularSeason.points / regularSeason.gamesPlayed,
-                playoffPoints : playoffs.points,
-                gpg : regularSeason.goals / regularSeason.gamesPlayed,
-                apg : regularSeason.assists / regularSeason.gamesPlayed,
-                assists : regularSeason.assists
+
+               
+
+        } else{
+
+                const playerWeights = {
+                        ppg: { w: 0.18, max: 1.921},
+                        gamesPlayed: {w: 0.07, max: 1779},
+                        points: {w:0.15, max: 2857},
+                        playoffPoints: {w:0.13, max: 382},
+                        hart: {w:0.25, max: 9},
+                        norris: {w:0.2, max: 7},
+                        connSmythe: {w:0.21, max: 3},
+                        stanleyCups: {w:0.1, max:11},
+                        gpg: {w:0.1, max:0.76},
+                        selke: {w:0.09, max:6},
+                        apg: {w:0.1, max:1.32},
+                        ladyBing: {w:0.05, max:7},
+                        goals: {w:0.16, max:894},
+                        artRoss: {w:0.2, max: 10},
+                        rocket: {w:0.12, max: 8},
+                        tedLindsay: {w:0.18, max:5},
+                        assists: {w:0.1, max: 1963}
+                }
+
+
+                hofScore = 
+                        playerWeights.ppg.w * ((regularSeason.points / regularSeason.gamesPlayed)/playerWeights.ppg.max) + 
+                        playerWeights.gamesPlayed.w * (regularSeason.gamesPlayed / playerWeights.gamesPlayed.max) +
+                        playerWeights.points.w * (regularSeason.points/ playerWeights.points.max) +
+                        playerWeights.playoffPoints.w * (playoffs.points / playerWeights.playoffPoints.max) +
+                        playerWeights.gpg.w * ((regularSeason.goals / regularSeason.gamesPlayed)/playerWeights.gpg.max) + 
+                        playerWeights.apg.w * ((regularSeason.assists / regularSeason.gamesPlayed)/playerWeights.apg.max) + 
+                        playerWeights.goals.w * (regularSeason.goals / playerWeights.goals.max) +
+                        playerWeights.hart.w * (numHart/ playerWeights.hart.max) + 
+                        playerWeights.connSmythe.w * (numConnSmythe / playerWeights.connSmythe.max) +
+                        playerWeights.norris.w * (numNorris / playerWeights.norris.max) + 
+                        playerWeights.ladyBing.w * (numLadyBing / playerWeights.ladyBing.max) +
+                        playerWeights.stanleyCups.w * (numStanleyCup / playerWeights.stanleyCups.max) + 
+                        playerWeights.rocket.w * (numRocket / playerWeights.rocket.max) + 
+                        playerWeights.selke.w * (numSelke / playerWeights.selke.max) + 
+                        playerWeights.tedLindsay.w * (numTedLindsay / playerWeights.tedLindsay.max) + 
+                        playerWeights.assists.w * ( regularSeason.assists / playerWeights.assists.max) + 
+                        playerWeights.artRoss.w * (numArtRoss / playerWeights.artRoss.max)
         }
-        console.log(JSON.stringify(stats))
+
         
-        console.log(`${weights.points} * (${stats.points}/ ${maxValues.points}) `)
-        const HOFScore = weights.ppg * (stats.ppg/maxValues.ppg) + 
-                        weights.gamesPlayed * (stats.gamesPlayed / maxValues.gamesPlayed) +
-                        weights.points * (stats.points/ maxValues.points) +
-                        weights.playoffPoints * (stats.playoffPoints / maxValues.playoffPoints) +
-                        weights.gpg * (stats.gpg/maxValues.gpg) + 
-                        weights.apg * (stats.apg/maxValues.apg) + 
-                        weights.goals * (stats.goals / maxValues.goals) +
-                        weights.hart * (numHart/ maxValues.hart) + 
-                        weights.connSmythe * (numConnSmythe / maxValues.connSmythe) +
-                        weights.norris * (numNorris / maxValues.norris) + 
-                        weights.ladyBing * (numLadyBing / maxValues.ladyBing) +
-                        weights.stanleyCups * (numStanleyCup / maxValues.stanleyCups) + 
-                        weights.rocket * (numRocket / maxValues.rocket) + 
-                        weights.selke * (numSelke / maxValues.selke) + 
-                        weights.tedLindsay * (numTedLindsay / maxValues.tedLindsay) + 
-                        weights.assists * ( stats.assists / maxValues.assists)
+        
                         
 
 
 
-        console.log(`HOF Score: ${HOFScore}`)
+        console.log(`HOF Score: ${hofScore}`)
         
 
-        return HOFScore
+        return hofScore
 
 }
