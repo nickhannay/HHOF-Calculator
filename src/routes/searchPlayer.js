@@ -14,27 +14,30 @@ router.post('/', async (req, res) => {
 
 
         //console.log(`Results: ${JSON.stringify(playerResults)}`)
-        res.render('index', {content: 'index', results : playerResults});
+        res.render('index', {content: 'index', results : playerResults, searchTerm: name});
 })
 
 
 async function getSearchResults(searchName, limit){
-        const searchParams = {
-                limit: limit,
-                culture: 'en-us',
-                q: searchName
-        }
-
-        const searchUrl = new URL(BASE_URL)
-        searchUrl.search = new URLSearchParams(searchParams).toString()
-        const searchResults = await fetch(searchUrl)
-        const resultsJSON = await searchResults.json()
-
-
         let players = []
-        resultsJSON.forEach( (player) => {
-                players.push({name: player.name, id: player.playerId})
-        })
+        if(searchName){
+                const searchParams = {
+                        limit: limit,
+                        culture: 'en-us',
+                        q: searchName
+                }
+        
+                const searchUrl = new URL(BASE_URL)
+                searchUrl.search = new URLSearchParams(searchParams).toString()
+                const searchResults = await fetch(searchUrl)
+                const resultsJSON = await searchResults.json()
+        
+                
+                resultsJSON.forEach( (player) => {
+                        players.push({name: player.name, id: player.playerId})
+                })
+        }
+        
         return players
 
 }

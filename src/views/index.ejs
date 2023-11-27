@@ -6,11 +6,11 @@
         </head>
         <body>
                 <div id="search-container">
-                        <form id="search-form" action="/search" method="POST">
+                        <form id="search-form" action="/search" method="POST" >
                                 <input type="text" placeholder="Search for a player..." id="search-input" name="search-input">
                                 <button type="submit" id="submit-btn">Submit</button>
                         </form>
-                        <% if (results) {%>
+                        <% if (typeof results === 'object' && results.length > 0) {%>
                                 <h1>Results</h1>
                                 <div id="searchResults">
                                         <ul>
@@ -21,6 +21,8 @@
                                                 <% }) %>
                                         </ul>
                                 </div>
+                        <% } else if (typeof results === 'object' && results.length <= 0) {%>
+                                <h2>No Results for: <%= searchTerm  %></h2>
                         <% } %>
                 </div>   
                 
