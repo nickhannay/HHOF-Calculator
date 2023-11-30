@@ -8,25 +8,31 @@
                 <img src=<%= player.headshot%> alt-text="headshot">
                 <p><%= player.firstName.default%> <%= player.lastName.default%></p>
                 <table>
-                        <tr>
-                                <td>Career Regular Games Played: </td>
-                                <td><b><%=player.careerTotals.regularSeason.gamesPlayed%></b></td>
-                        </tr>
-                        <tr>
-                                <td>Career Regular Season Goals: </td>
-                                <td><b><%= player.careerTotals.regularSeason.goals %></b></td>
-                        </tr>
-                        <tr>
-                                <td>Career Regular Season Assists: </td>
-                                <td><b><%= player.careerTotals.regularSeason.assists %></b></td>
-                        </tr>
-                        <tr>
-                                <td>Career Regular Season Points: </td>
-                                <td><b><%= player.careerTotals.regularSeason.points %></b></td>
-                        </tr>
-                        <tr>
-                                <td>HOF Score: <b><%= hofProbability %></b></td>
-                        </tr>
+                        <% if ('careerTotals' in player) {%>
+                                <tr>
+                                        <td>Career Regular Games Played: </td>
+                                        <td><b><%=player.careerTotals.regularSeason.gamesPlayed%></b></td>
+                                </tr>
+                                <tr>
+                                        <td>Career Regular Season Goals: </td>
+                                        <td><b><%= player.careerTotals.regularSeason.goals %></b></td>
+                                </tr>
+                                <tr>
+                                        <td>Career Regular Season Assists: </td>
+                                        <td><b><%= player.careerTotals.regularSeason.assists %></b></td>
+                                </tr>
+                                <tr>
+                                        <td>Career Regular Season Points: </td>
+                                        <td><b><%= player.careerTotals.regularSeason.points %></b></td>
+                                </tr>
+                                <tr>
+                                        <td>HOF Score: <b><%= hofProbability %></b></td>
+                                </tr>
+                        <%} else { %>
+                                <tr>
+                                        <td>Did not play in the nhl</td>
+                                </tr>
+                        <% } %>
                 </table>
         </body>
 

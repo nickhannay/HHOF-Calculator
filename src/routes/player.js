@@ -5,6 +5,8 @@ const router = express.Router()
 const BASE_URL = 'https://api-web.nhle.com/v1/player/'
 
 
+// NEED to account for players not in NHL !!
+
 router.get('/:id', async (req, res) => {
 
         const playerId = req.params.id
@@ -13,7 +15,6 @@ router.get('/:id', async (req, res) => {
 
         const response = await fetch(searchUrl)
         const playerData = await response.json()
-
 
         const hofScore = hofCalculator(playerData)
         res.render('playerinfo', {player: playerData, hofProbability: hofScore})
@@ -24,6 +25,13 @@ module.exports = router
 
 function hofCalculator(player){
         
+        if(!player.careerTotals){
+                return 0
+        } else if (!player.careerTotals.regularSeason){
+                return 0
+        }
+
+
         const awards = getAwards(player)
         const regularSeason = player.careerTotals.regularSeason
         const playoffs = player.careerTotals.playoffs || {points : 0}

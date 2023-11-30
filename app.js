@@ -3,7 +3,6 @@ const path = require('path')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const {validationResults, body } = require('express-validator')
-
 const app = express()
 const PORT = 8080
 
@@ -13,7 +12,7 @@ app.set('views', path.join(__dirname, 'src', 'views'))
 app.use(express.json())
 app.use(cors())
 app.use(express.urlencoded({extended: true}))
-app.use(bodyParser.urlencoded({ extended: true }));
+app.get('/favicon.ico', (req, res) => res.status(200))
 
 
 
@@ -31,7 +30,6 @@ app.use('/player', displayPlayerRoute)
 
 
 app.use(express.static(path.join(__dirname, 'public')))
-
 
 
 

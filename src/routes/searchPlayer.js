@@ -11,11 +11,17 @@ router.post('/', async (req, res) => {
         
         // make get request to external API
         const playerResults = await getSearchResults(name, 25)
+        /*const nhlPlayers = playerResults.filter(player => [
+                player.hasOwnProperty('careerTotals')
+        ])
 
 
-        //console.log(`Results: ${JSON.stringify(playerResults)}`)
-        res.render('index', {content: 'index', results : playerResults, searchTerm: name});
+        console.log(`Results: ${nhlPlayers}`)*/
+        res.render('index', { results : playerResults, searchTerm: name});
 })
+
+
+
 
 
 async function getSearchResults(searchName, limit){
@@ -31,13 +37,14 @@ async function getSearchResults(searchName, limit){
                 searchUrl.search = new URLSearchParams(searchParams).toString()
                 const searchResults = await fetch(searchUrl)
                 const resultsJSON = await searchResults.json()
+
         
                 
                 resultsJSON.forEach( (player) => {
                         players.push({name: player.name, id: player.playerId})
                 })
         }
-        console.log(players)
+        
         return players
 
 }
