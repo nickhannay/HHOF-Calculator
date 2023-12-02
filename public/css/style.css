@@ -1,30 +1,49 @@
 
 html {
-        font-size: 15px;
-        padding: 0;
-        margin: 0;
+    font-size: 15px;
+    padding: 0;
+    margin: 0;
 }
 
 
 
 body {
-        margin: 0;
-        padding: 0;
-        background-color: bisque;
-        min-height: 400px;
+    margin: 0;
+    padding: 0;
+    background-color: bisque;
+    min-height: 400px;
 }
 
 
 
 #search-container{
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: center;
-        height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
 }
 
 
 #search-form {
-        display: inline-block;
+    display: inline-block;
+}
+
+#searchResults {
+    overflow-y : auto;
+    max-height : 400px;
+}
+
+.result-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 10px;
+
+}
+
+.result-item img{
+    width: 100px;
+    height: 100px;
+    padding: 10px;
 }

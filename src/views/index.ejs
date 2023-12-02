@@ -16,7 +16,11 @@
                                         <ul>
                                                <% results.forEach( (result) => {%>  
                                                 <li>
-                                                        <a href="/player/<%=result.id%>"><%= result.name %></li>
+                                                        <div class="result-item">
+                                                            <a href="/player/<%=result.id%>"><%= result.name %></a>
+                                                            <img src="<%= result.headShot %>">
+                                                        </div> 
+                                                        
                                                 </li>
                                                 <% }) %>
                                         </ul>
